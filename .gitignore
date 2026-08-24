@@ -46,3 +46,33 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+
+# ---- স্বাক্ষর ও গোপন তথ্য: কখনো কমিট নয় ----
+android/key.properties
+**/android/key.properties
+*.jks
+*.keystore
+*.p12
+*.pepk
+**/*.mobileprovision
+**/*.p8
+
+# ---- পরিবেশ ----
+.env
+.env.*
+!.env.example
+
+# ---- সার্ভিস অ্যাকাউন্ট: সবসময় গোপন ----
+**/service-account*.json
+**/*-firebase-adminsdk-*.json
+
+# ---- স্থানীয় সরঞ্জাম ----
+android/local.properties
+**/ios/Pods/
+.fvm/
+
+# ---- জেনারেট করা কোড ----
+*.g.dart
+*.freezed.dart
+*.config.dart
+*.mocks.dart
