@@ -76,3 +76,19 @@ android/local.properties
 *.freezed.dart
 *.config.dart
 *.mocks.dart
+
+
+
+# ---- Firebase ক্লায়েন্ট কনফিগ ----
+**/google-services.json
+!**/google-services-example.json
+**/GoogleService-Info.plist
+lib/firebase_options.dart
+
+# ---- কভারেজ ও টেস্ট আউটপুট ----
+coverage/
+test/failures/
+
+# ---- OS জাঞ্জাল ----
+Thumbs.db
+Desktop.ini
