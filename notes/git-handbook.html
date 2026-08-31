@@ -1,0 +1,344 @@
+<title>Git হাতবই</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@600;700;800&family=Hind+Siliguri:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+  :root {
+    --ground: #faf7f4;
+    --surface: #ffffff;
+    --ink: #241e1a;
+    --muted: #756a62;
+    --line: #e7ded6;
+    --accent: #d63c22;
+    --accent-soft: #fbe9e4;
+    --code-bg: #211b17;
+    --code-ink: #f3ece5;
+    --code-cmt: #9d8f83;
+    --ok: #2e7d4f;
+    --warn-bg: #fdf3e3;
+    --warn-line: #e8c98a;
+  }
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --ground: #17120e;
+      --surface: #201a15;
+      --ink: #f0e8e1;
+      --muted: #a3968b;
+      --line: #372e26;
+      --accent: #ff6a4d;
+      --accent-soft: #3a221b;
+      --code-bg: #100c09;
+      --code-ink: #ece3da;
+      --code-cmt: #8a7d70;
+      --ok: #6bc78f;
+      --warn-bg: #2e2415;
+      --warn-line: #6b5626;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground: #17120e;
+    --surface: #201a15;
+    --ink: #f0e8e1;
+    --muted: #a3968b;
+    --line: #372e26;
+    --accent: #ff6a4d;
+    --accent-soft: #3a221b;
+    --code-bg: #100c09;
+    --code-ink: #ece3da;
+    --code-cmt: #8a7d70;
+    --ok: #6bc78f;
+    --warn-bg: #2e2415;
+    --warn-line: #6b5626;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Hind Siliguri", "Noto Sans Bengali", sans-serif;
+    font-size: 16.5px;
+    line-height: 1.75;
+  }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 48px 20px 96px; }
+
+  header { border-bottom: 3px solid var(--accent); padding-bottom: 28px; margin-bottom: 8px; }
+  .eyebrow {
+    font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--accent); font-weight: 700; margin-bottom: 6px;
+  }
+  h1 {
+    font-family: "Baloo Da 2", "Hind Siliguri", sans-serif;
+    font-weight: 800; font-size: clamp(34px, 6vw, 46px);
+    margin: 0 0 10px; line-height: 1.2; text-wrap: balance;
+  }
+  .lede { color: var(--muted); margin: 0; max-width: 60ch; }
+
+  nav.toc { display: flex; flex-wrap: wrap; gap: 8px; padding: 20px 0 4px; }
+  nav.toc a {
+    text-decoration: none; color: var(--ink); background: var(--surface);
+    border: 1px solid var(--line); border-radius: 999px;
+    padding: 4px 14px; font-size: 13.5px; font-weight: 600;
+  }
+  nav.toc a:hover, nav.toc a:focus-visible { border-color: var(--accent); color: var(--accent); outline: none; }
+
+  section { margin-top: 52px; }
+  h2 {
+    font-family: "Baloo Da 2", "Hind Siliguri", sans-serif;
+    font-weight: 700; font-size: 26px; margin: 0 0 4px;
+    display: flex; align-items: baseline; gap: 12px; text-wrap: balance;
+  }
+  h2 .no {
+    font-family: "JetBrains Mono", monospace; font-size: 14px;
+    color: var(--accent); font-weight: 600; letter-spacing: .05em;
+  }
+  .sub { color: var(--muted); margin: 0 0 18px; }
+  h3 { font-size: 17px; margin: 26px 0 8px; font-weight: 700; }
+
+  pre {
+    background: var(--code-bg); color: var(--code-ink);
+    border-radius: 10px; padding: 16px 18px; overflow-x: auto;
+    font-family: "JetBrains Mono", Consolas, monospace;
+    font-size: 13.5px; line-height: 1.9; margin: 12px 0;
+  }
+  pre .c { color: var(--code-cmt); }
+  pre .p { color: var(--accent); font-weight: 600; }
+  code.inline {
+    font-family: "JetBrains Mono", Consolas, monospace; font-size: .86em;
+    background: var(--accent-soft); color: var(--ink);
+    padding: 1.5px 7px; border-radius: 6px; white-space: nowrap;
+  }
+
+  .note {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 10px; padding: 12px 16px; margin: 14px 0; font-size: 15px;
+  }
+  .note b:first-child { color: var(--accent); }
+  .warn {
+    background: var(--warn-bg); border: 1px solid var(--warn-line);
+    border-radius: 10px; padding: 12px 16px; margin: 14px 0; font-size: 15px;
+  }
+
+  .flow {
+    display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+    margin: 14px 0; font-family: "JetBrains Mono", monospace; font-size: 13px;
+  }
+  .flow span {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 8px; padding: 5px 12px; font-weight: 600;
+  }
+  .flow em { color: var(--muted); font-style: normal; }
+
+  .tbl { overflow-x: auto; margin: 14px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: 14.5px; }
+  th, td { text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th {
+    font-size: 12px; text-transform: uppercase; letter-spacing: .1em;
+    color: var(--muted); font-weight: 700;
+  }
+  td code { font-family: "JetBrains Mono", monospace; font-size: 12.5px; white-space: nowrap; }
+  td .pfx { color: var(--accent); font-weight: 700; font-family: "JetBrains Mono", monospace; font-size: 13px; }
+
+  ol.steps { padding-left: 0; margin: 14px 0; list-style: none; counter-reset: s; }
+  ol.steps li { counter-increment: s; display: flex; gap: 14px; margin: 10px 0; }
+  ol.steps li::before {
+    content: counter(s, bengali);
+    flex: 0 0 26px; height: 26px; border-radius: 50%;
+    background: var(--accent); color: #fff; font-weight: 700; font-size: 13.5px;
+    display: flex; align-items: center; justify-content: center; margin-top: 3px;
+  }
+
+  footer { margin-top: 72px; padding-top: 20px; border-top: 1px solid var(--line);
+    color: var(--muted); font-size: 13.5px; }
+  a { color: var(--accent); }
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Flutter শেখার নোট · Git ও GitHub</div>
+  <h1>Git হাতবই</h1>
+  <p class="lede">প্রতিদিনের কাজে যে কমান্ডগুলো লাগে — কপি করার জন্য এক জায়গায়। নিয়ম একটাই: <b>main সবসময় ছাড়ার যোগ্য</b>, প্রতিটা কাজ একটা ব্রাঞ্চে।</p>
+</header>
+
+<nav class="toc">
+  <a href="#setup">সেটআপ</a>
+  <a href="#new">নতুন প্রজেক্ট → GitHub</a>
+  <a href="#clone">Clone ও remote</a>
+  <a href="#daily">দৈনিক push / pull</a>
+  <a href="#commits">Conventional Commits</a>
+  <a href="#undo">ভুল শোধরানো ও পিছনে ফেরা</a>
+  <a href="#team">ব্রাঞ্চে টিম-কাজ</a>
+  <a href="#secrets">গোপন তথ্য ফাঁস</a>
+</nav>
+
+<section id="setup">
+  <h2><span class="no">০১</span>একবারের সেটআপ</h2>
+  <p class="sub">নতুন পিসিতে একবারই চালাতে হয় — Git এর আচরণ ঠিক করে দেয়।</p>
+<pre><span class="c"># নাম-ইমেইল (commit এ কার নাম যাবে)</span>
+git config --global user.name "LR Jamil"
+git config --global user.email "your@email.com"
+
+<span class="c"># আচরণ ঠিক করা</span>
+git config --global init.defaultBranch main
+git config --global pull.rebase true      <span class="c"># pull এ history জট পাকাবে না</span>
+git config --global rebase.autostash true
+git config --global rerere.enabled true   <span class="c"># একই conflict এর সমাধান মনে রাখে</span>
+
+<span class="c"># যাচাই</span>
+git config --global --list</pre>
+</section>
+
+<section id="new">
+  <h2><span class="no">০২</span>নতুন প্রজেক্ট GitHub এ পাঠানো</h2>
+  <p class="sub">আগে GitHub এ একটা <b>খালি</b> repo বানান — README বা .gitignore এ টিক দেবেন না, দিলে প্রথম push এ conflict হবে।</p>
+<pre>flutter create my_app
+cd my_app
+git init                  <span class="c"># flutter create নিজেই করে দেয়, না করলে এটা</span>
+git add .
+git commit -m "initial commit"
+git branch -M main
+git remote add origin https://github.com/username/my_app.git
+git push -u origin main   <span class="c"># -u দিলে পরে শুধু git push লিখলেই হবে</span></pre>
+</section>
+
+<section id="clone">
+  <h2><span class="no">০৩</span>Clone ও remote বদলানো</h2>
+  <p class="sub">অন্যের (বা নিজের পুরনো) repo নামিয়ে নিজের GitHub এ তোলা।</p>
+<pre><span class="c"># repo টা নিজের কম্পিউটারে আনা</span>
+git clone https://github.com/user/repo.git
+cd repo
+
+<span class="c"># এখন কোন GitHub এ connected, দেখা</span>
+git remote -v
+
+<span class="c"># পুরনো repo থেকে disconnect</span>
+git remote remove origin
+
+<span class="c"># নিজের নতুন (খালি) repo জুড়ে দেওয়া</span>
+git remote add origin https://github.com/username/new-repo.git
+git remote -v             <span class="c"># নতুন ঠিকানা এল কিনা যাচাই</span>
+
+<span class="c"># নিজের GitHub এ পাঠানো</span>
+git branch -M main
+git push -u origin main</pre>
+</section>
+
+<section id="daily">
+  <h2><span class="no">০৪</span>দৈনিক কাজ — push ও pull</h2>
+  <p class="sub">দিনে যতবার কোড বদলাবেন, এই চক্রটাই।</p>
+
+  <div class="flow">
+    <span>status</span><em>→</em><span>add</span><em>→</em><span>commit</span><em>→</em><span>push</span>
+  </div>
+
+<pre><span class="c"># কী কী বদলেছে দেখা</span>
+git status
+
+<span class="c"># সব পরিবর্তন স্টেজে নেওয়া</span>
+git add .
+
+<span class="c"># commit (মেসেজে কী করেছেন লিখুন — নিচের ০৫ নম্বর নিয়মে)</span>
+git commit -m "feat(profile): add user avatar"
+
+<span class="c"># GitHub এ তোলা</span>
+git push</pre>
+
+  <h3>Pull — GitHub থেকে নতুন কোড নামানো</h3>
+  <p>অন্য পিসি থেকে কাজ করলে, বা টিমের কেউ push করলে — <b>কাজ শুরুর আগে</b> সবসময়:</p>
+<pre>git pull</pre>
+  <div class="note"><b>অভ্যাস:</b> সকালে বসেই <code class="inline">git pull</code>, উঠার আগে <code class="inline">git push</code>। তাহলে কখনো "আমার পিসিতে তো ছিল" সমস্যায় পড়বেন না।</div>
+</section>
+
+<section id="commits">
+  <h2><span class="no">০৫</span>Conventional Commits</h2>
+  <p class="sub">মেসেজের শুরুর শব্দটাই বলে দেয় commit টা কী ধরনের। ছাঁচ: <code class="inline">type(scope): কী করলাম</code></p>
+  <div class="tbl">
+  <table>
+    <tr><th>Prefix</th><th>কখন</th><th>উদাহরণ</th></tr>
+    <tr><td><span class="pfx">feat</span></td><td>নতুন ফিচার বা স্ক্রিন যোগ</td><td><code>feat(auth): add fingerprint login</code></td></tr>
+    <tr><td><span class="pfx">fix</span></td><td>bug, error বা crash ঠিক</td><td><code>fix(cart): fix total price calculation</code></td></tr>
+    <tr><td><span class="pfx">docs</span></td><td>README বা ডকুমেন্ট বদল</td><td><code>docs: add installation step in readme</code></td></tr>
+    <tr><td><span class="pfx">style</span></td><td>রং, spacing, UI সাজ</td><td><code>style(home): change banner padding</code></td></tr>
+    <tr><td><span class="pfx">refactor</span></td><td>কোড re-write / optimize (আচরণ এক)</td><td><code>refactor(user): simplify profile logic</code></td></tr>
+    <tr><td><span class="pfx">perf</span></td><td>speed বা performance বাড়ানো</td><td><code>perf(image): optimize image caching</code></td></tr>
+    <tr><td><span class="pfx">test</span></td><td>টেস্ট লেখা</td><td><code>test(auth): add validation unit tests</code></td></tr>
+    <tr><td><span class="pfx">build</span></td><td>gradle বা dependency বদল</td><td><code>build: bump gradle wrapper to 9.31</code></td></tr>
+    <tr><td><span class="pfx">ci</span></td><td>GitHub Actions / CI script</td><td><code>ci: add workflow for testing</code></td></tr>
+    <tr><td><span class="pfx">chore</span></td><td>টুকটাক (gitignore, ফোল্ডার গোছানো)</td><td><code>chore: update gitignore for keys</code></td></tr>
+    <tr><td><span class="pfx">revert</span></td><td>আগের commit ফিরিয়ে নেওয়া</td><td><code>revert: revert feat(auth) changes</code></td></tr>
+  </table>
+  </div>
+</section>
+
+<section id="undo">
+  <h2><span class="no">০৬</span>ভুল শোধরানো ও পুরনো commit এ ফেরা</h2>
+  <p class="sub">পরিস্থিতি ধরে ধরে — উপর থেকে নিরাপদ, নিচের দিকে বিপজ্জনক।</p>
+
+  <h3>এখনো commit করিনি — পরিবর্তন ফেলে দিতে চাই</h3>
+<pre>git restore file.dart            <span class="c"># এক ফাইলের বদল উধাও</span>
+git restore .                    <span class="c"># সব ফাইলের বদল উধাও (সাবধানে)</span>
+git restore --staged file.dart   <span class="c"># ভুলে add করা ফাইল unstage</span></pre>
+
+  <h3>শেষ commit এ কিছু ভুলে গেছি</h3>
+<pre>git add .
+git commit --amend --no-edit     <span class="c"># শেষ commit এর সাথে জুড়ে যাবে</span></pre>
+
+  <h3>পুরনো commit দেখা ও ঘুরে আসা</h3>
+<pre>git log --oneline                <span class="c"># সব commit এর তালিকা, ছোট sha সহ</span>
+git switch --detach a1b2c3d      <span class="c"># ওই সময়ের কোডে ঘুরে দেখা</span>
+git switch main                  <span class="c"># বর্তমানে ফেরত</span></pre>
+
+  <h3>একটা পুরনো commit বাতিল করা — নিরাপদ পথ</h3>
+<pre>git revert a1b2c3d               <span class="c"># উল্টো একটা নতুন commit বানায়</span></pre>
+  <div class="note"><b>revert কেন সেরা:</b> ইতিহাস মোছে না, উল্টে দেয়। push করা commit এর জন্য এটাই একমাত্র ঠিক পথ।</div>
+
+  <h3>শেষ commit-ই মুছে ফেলা (এখনো push করিনি)</h3>
+<pre>git reset --soft HEAD~1          <span class="c"># commit গেল, কোড রয়ে গেল</span>
+git reset --hard HEAD~1          <span class="c"># commit ও কোড দুটোই গেল ⚠</span></pre>
+  <div class="warn">⚠ <b>--hard মানে চিরতরে।</b> আর push করা commit এ কখনো reset বা amend নয় — করতেই হলে <code class="inline">git push --force-with-lease</code>, কখনো খালি <code class="inline">--force</code> নয়।</div>
+</section>
+
+<section id="team">
+  <h2><span class="no">০৭</span>ব্রাঞ্চে টিম-কাজ — ২/৩ জন মিলে</h2>
+  <p class="sub">নিয়ম: কেউ সরাসরি main এ push করবে না। প্রত্যেকের কাজ নিজের ব্রাঞ্চে, main এ ঢোকে PR দিয়ে।</p>
+
+  <ol class="steps">
+    <li><div>কাজ শুরুর আগে main তাজা করুন:<pre>git switch main
+git pull</pre></div></li>
+    <li><div>নিজের কাজের ব্রাঞ্চ খুলুন — নামে কাজটা বোঝা যাবে:<pre>git switch -c feat/gift-screen</pre></div></li>
+    <li><div>কাজ করুন, commit করুন (দিনে কয়েকবার), ব্রাঞ্চটা GitHub এ তুলুন:<pre>git add .
+git commit -m "feat(gift): add gift bottom sheet"
+git push -u origin feat/gift-screen</pre></div></li>
+    <li><div>GitHub এ গিয়ে <b>Pull Request</b> খুলুন (বা টার্মিনালে <code class="inline">gh pr create --fill</code>)। টিমের আরেকজন diff পড়ে দেখবে — ভুলে রাখা print, TODO এখানেই ধরা পড়ে।</div></li>
+    <li><div>ঠিক থাকলে <b>Merge</b> চাপুন, ব্রাঞ্চ মুছে দিন। তারপর সবাই:<pre>git switch main
+git pull</pre></div></li>
+  </ol>
+
+  <h3>দুজনের কোড লেগে গেলে (conflict)</h3>
+<pre><span class="c"># নিজের ব্রাঞ্চে থেকে main এর নতুন কোড টেনে আনুন</span>
+git switch feat/gift-screen
+git pull origin main
+
+<span class="c"># conflict হলে Git ফাইলে <<<< ==== >>>> চিহ্ন বসাবে —</span>
+<span class="c"># Android Studio তে খুলে কোন অংশ রাখবেন বেছে নিন, তারপর:</span>
+git add .
+git commit
+git push</pre>
+
+  <div class="note"><b>ব্রাঞ্চ ছোট রাখুন:</b> আয়ু কয়েক ঘণ্টা থেকে বড়জোর ২ দিন। যত ছোট ব্রাঞ্চ, তত ছোট conflict। আর একা কাজ করলেও PR খোলার অভ্যাস রাখুন — diff পড়া, CI, আর "কেন এই বদল" এর স্থায়ী রেকর্ড, তিনটাই ফ্রিতে পাবেন।</div>
+</section>
+
+<section id="secrets">
+  <h2><span class="no">০৮</span>গোপন তথ্য ফাঁস হলে</h2>
+  <p class="sub">keystore, API key বা password ভুলে push হয়ে গেলে — ক্রমটা এই সাজেই।</p>
+<pre><span class="c"># আগে খুঁজে দেখুন কোনো repo তে আছে কিনা</span>
+git log --all --full-history -- "*.jks" "android/key.properties" ".env"</pre>
+  <ol class="steps">
+    <li><div><b>আগে চাবিটাই বদলান / বাতিল করুন।</b> ইতিহাস মোছা যথেষ্ট নয় — clone, fork, CI লগে কপি থেকে যায়। public repo তে push মানেই ধরে নিন ফাঁস।</div></li>
+    <li><div>তারপর ইতিহাস মুছুন: <code class="inline">git filter-repo --sensitive-data-removal --invert-paths --path &lt;file&gt;</code> (আগে তাজা clone নিতে হয়)</div></li>
+    <li><div><code class="inline">git push --force --all</code> ও <code class="inline">--force --tags</code>, শেষে GitHub Support কে ক্যাশ মুছতে বলুন।</div></li>
+  </ol>
+  <div class="note"><b>আগে থেকেই ঠেকান:</b> <code class="inline">.gitignore</code> এ <code class="inline">*.jks</code>, <code class="inline">key.properties</code>, <code class="inline">.env</code> রাখুন — প্রথম commit এর আগেই।</div>
+</section>
+
+<footer>Flutter শেখার পথে বানানো নোট · কমান্ডগুলো কপি করে টার্মিনালে চালান — মুখস্থ নয়, অভ্যাস।</footer>
+</div>
